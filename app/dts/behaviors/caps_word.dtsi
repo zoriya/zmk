@@ -13,6 +13,7 @@
             #binding-cells = <0>;
             continue-list = <UNDERSCORE BACKSPACE DELETE>;
             display-name = "Caps Word";
+            ignore-modifiers;
         };
     };
 };
