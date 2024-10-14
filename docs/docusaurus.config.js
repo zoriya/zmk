@@ -81,7 +81,7 @@ module.exports = {
             },
             {
               label: "Development",
-              to: "docs/development/setup",
+              to: "docs/development/contributing/clean-room",
             },
           ],
         },
@@ -165,6 +165,7 @@ module.exports = {
     ],
   ],
   markdown: {
+    format: "detect",
     mermaid: true,
     mdx1Compat: {
       comments: false,
