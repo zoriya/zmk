@@ -27,10 +27,10 @@ If the debounce press/release values are set to any value other than `-1`, they 
 
 Applies to: [`/chosen` node](https://docs.zephyrproject.org/3.5.0/build/dts/intro-syntax-structure.html#aliases-and-chosen-nodes)
 
-| Property               | Type | Description                                                   |
-| ---------------------- | ---- | ------------------------------------------------------------- |
-| `zmk,kscan`            | path | The node for the keyboard scan driver to use                  |
-| `zmk,matrix-transform` | path | The node for the [matrix transform](#matrix-transform) to use |
+| Property               | Type | Description                                                            |
+| ---------------------- | ---- | ---------------------------------------------------------------------- |
+| `zmk,kscan`            | path | The node for the keyboard scan driver to use                           |
+| `zmk,matrix-transform` | path | The node for the [matrix transform](layout.md#matrix-transform) to use |
 
 ## Demux Driver
 
@@ -71,15 +71,15 @@ Applies to: `compatible = "zmk,kscan-gpio-direct"`
 
 Definition file: [zmk/app/module/dts/bindings/kscan/zmk,kscan-gpio-direct.yaml](https://github.com/zmkfirmware/zmk/blob/main/app/module/dts/bindings/kscan/zmk%2Ckscan-gpio-direct.yaml)
 
-| Property                  | Type       | Description                                                                                                 | Default |
-| ------------------------- | ---------- | ----------------------------------------------------------------------------------------------------------- | ------- |
-| `input-gpios`             | GPIO array | Input GPIOs (one per key). Can be either direct GPIO pin or `gpio-key` references.                          |         |
-| `debounce-press-ms`       | int        | Debounce time for key press in milliseconds. Use 0 for eager debouncing.                                    | 5       |
-| `debounce-release-ms`     | int        | Debounce time for key release in milliseconds.                                                              | 5       |
-| `debounce-scan-period-ms` | int        | Time between reads in milliseconds when any key is pressed.                                                 | 1       |
-| `poll-period-ms`          | int        | Time between reads in milliseconds when no key is pressed and `CONFIG_ZMK_KSCAN_DIRECT_POLLING` is enabled. | 10      |
-| `toggle-mode`             | bool       | Use toggle switch mode.                                                                                     | n       |
-| `wakeup-source`           | bool       | Mark this kscan instance as able to wake the keyboard from deep sleep                                       | n       |
+| Property                  | Type       | Description                                                                                                | Default |
+| ------------------------- | ---------- | ---------------------------------------------------------------------------------------------------------- | ------- |
+| `input-gpios`             | GPIO array | Input GPIOs (one per key). Can be either direct GPIO pin or `gpio-key` references                          |         |
+| `debounce-press-ms`       | int        | Debounce time for key press in milliseconds. Use 0 for eager debouncing                                    | 5       |
+| `debounce-release-ms`     | int        | Debounce time for key release in milliseconds                                                              | 5       |
+| `debounce-scan-period-ms` | int        | Time between reads in milliseconds when any key is pressed                                                 | 1       |
+| `poll-period-ms`          | int        | Time between reads in milliseconds when no key is pressed and `CONFIG_ZMK_KSCAN_DIRECT_POLLING` is enabled | 10      |
+| `toggle-mode`             | bool       | Use toggle switch mode                                                                                     | n       |
+| `wakeup-source`           | bool       | Mark this kscan instance as able to wake the keyboard                                                      | n       |
 
 Assuming the switches connect each GPIO pin to the ground, the [GPIO flags](https://docs.zephyrproject.org/3.5.0/hardware/peripherals/gpio.html#api-reference) for the elements in `input-gpios` should be `(GPIO_ACTIVE_LOW | GPIO_PULL_UP)`:
 
@@ -94,7 +94,7 @@ Assuming the switches connect each GPIO pin to the ground, the [GPIO flags](http
     };
 ```
 
-A direct pin defined in the `input-gpios` property is considered a column when used in a [matrix transform](#matrix-transform); e.g. the 5th pin on the list can be referred to using `RC(0,4)`.
+A direct pin defined in the `input-gpios` property is considered a column when used in a [matrix transform](layout.md#matrix-transform); e.g. the 5th pin on the list can be referred to using `RC(0,4)`.
 
 By default, a switch will drain current through the internal pull up/down resistor whenever it is pressed. This is not ideal for a toggle switch, where the switch may be left in the "pressed" state for a long time. Enabling `toggle-mode` will make the driver enable and disable the internal pull up/down resistor as needed when the switch is toggled to minimise power draw. For `toggle-mode` to work correctly each pole of the switch needs a dedicated GPIO pin.
 
@@ -133,16 +133,16 @@ Applies to: `compatible = "zmk,kscan-gpio-matrix"`
 
 Definition file: [zmk/app/module/dts/bindings/kscan/zmk,kscan-gpio-matrix.yaml](https://github.com/zmkfirmware/zmk/blob/main/app/module/dts/bindings/kscan/zmk%2Ckscan-gpio-matrix.yaml)
 
-| Property                  | Type       | Description                                                                                                 | Default     |
-| ------------------------- | ---------- | ----------------------------------------------------------------------------------------------------------- | ----------- |
-| `row-gpios`               | GPIO array | Matrix row GPIOs in order, starting from the top row                                                        |             |
-| `col-gpios`               | GPIO array | Matrix column GPIOs in order, starting from the leftmost row                                                |             |
-| `debounce-press-ms`       | int        | Debounce time for key press in milliseconds. Use 0 for eager debouncing.                                    | 5           |
-| `debounce-release-ms`     | int        | Debounce time for key release in milliseconds.                                                              | 5           |
-| `debounce-scan-period-ms` | int        | Time between reads in milliseconds when any key is pressed.                                                 | 1           |
-| `diode-direction`         | string     | The direction of the matrix diodes                                                                          | `"row2col"` |
-| `poll-period-ms`          | int        | Time between reads in milliseconds when no key is pressed and `CONFIG_ZMK_KSCAN_MATRIX_POLLING` is enabled. | 10          |
-| `wakeup-source`           | bool       | Mark this kscan instance as able to wake the keyboard from deep sleep                                       | n           |
+| Property                  | Type       | Description                                                                                                | Default     |
+| ------------------------- | ---------- | ---------------------------------------------------------------------------------------------------------- | ----------- |
+| `row-gpios`               | GPIO array | Matrix row GPIOs in order, starting from the top row                                                       |             |
+| `col-gpios`               | GPIO array | Matrix column GPIOs in order, starting from the leftmost row                                               |             |
+| `debounce-press-ms`       | int        | Debounce time for key press in milliseconds. Use 0 for eager debouncing                                    | 5           |
+| `debounce-release-ms`     | int        | Debounce time for key release in milliseconds                                                              | 5           |
+| `debounce-scan-period-ms` | int        | Time between reads in milliseconds when any key is pressed                                                 | 1           |
+| `diode-direction`         | string     | The direction of the matrix diodes                                                                         | `"row2col"` |
+| `poll-period-ms`          | int        | Time between reads in milliseconds when no key is pressed and `CONFIG_ZMK_KSCAN_MATRIX_POLLING` is enabled | 10          |
+| `wakeup-source`           | bool       | Mark this kscan instance as able to wake the keyboard                                                      | n           |
 
 The `diode-direction` property must be one of:
 
@@ -198,9 +198,9 @@ Definition file: [zmk/app/module/dts/bindings/kscan/zmk,kscan-gpio-charlieplex.y
 | `debounce-release-ms`     | int        | Debounce time for key release in milliseconds.                                              | 5       |
 | `debounce-scan-period-ms` | int        | Time between reads in milliseconds when any key is pressed.                                 | 1       |
 | `poll-period-ms`          | int        | Time between reads in milliseconds when no key is pressed and `interrupt-gpois` is not set. | 10      |
-| `wakeup-source`           | bool       | Mark this kscan instance as able to wake the keyboard from deep sleep                       | n       |
+| `wakeup-source`           | bool       | Mark this kscan instance as able to wake the keyboard                                       | n       |
 
-Define the transform with a [matrix transform](#matrix-transform). The row is always the driven pin, and the column always the receiving pin (input to the controller).
+Define the transform with a [matrix transform](layout.md#matrix-transform). The row is always the driven pin, and the column always the receiving pin (input to the controller).
 For example, in `RC(5,0)` power flows from the 6th pin in `gpios` to the 1st pin in `gpios`.
 Exclude all positions where the row and column are the same as these pairs will never be triggered, since no pin can be both input and output at the same time.
 
@@ -223,11 +223,11 @@ Definition file: [zmk/app/dts/bindings/zmk,kscan-composite.yaml](https://github.
 
 The `zmk,kscan-composite` node should have one child node per keyboard scan driver that should be composited. Each child node can have the following properties:
 
-| Property        | Type    | Description                                                                    | Default |
-| --------------- | ------- | ------------------------------------------------------------------------------ | ------- |
-| `kscan`         | phandle | Label of the kscan driver to include                                           |         |
-| `row-offset`    | int     | Shifts row 0 of the included driver to a new row in the composite matrix       | 0       |
-| `column-offset` | int     | Shifts column 0 of the included driver to a new column in the composite matrix | 0       |
+| Property     | Type    | Description                                                                    | Default |
+| ------------ | ------- | ------------------------------------------------------------------------------ | ------- |
+| `kscan`      | phandle | Label of the kscan driver to include                                           |         |
+| `row-offset` | int     | Shifts row 0 of the included driver to a new row in the composite matrix       | 0       |
+| `col-offset` | int     | Shifts column 0 of the included driver to a new column in the composite matrix | 0       |
 
 ### Example Configuration
 
@@ -335,3 +335,29 @@ Definition file: [zmk/app/dts/bindings/zmk,kscan-mock.yaml](https://github.com/z
 | `exit-after`   | bool  | Exit the program after running all events     | false   |
 
 The `events` array should be defined using the macros from [app/module/include/dt-bindings/zmk/kscan_mock.h](https://github.com/zmkfirmware/zmk/blob/main/app/module/include/dt-bindings/zmk/kscan_mock.h).
+
+## Kscan Sideband Behavior Driver
+
+The Kscan sideband behaviors node can be used to assign behaviors to keys in a manner distinctly separate from the keymap. These assignments and definitions will not be affected by nor have any effect on the keymap.
+
+### Devicetree
+
+Applies to: `compatible = "zmk,kscan-sideband-behaviors"`
+
+Definition file: [zmk/app/dts/bindings/kscan/zmk,matrix-transform.yaml](https://github.com/zmkfirmware/zmk/blob/main/app/dts/bindings/kscan/zmk%2Ckscan-sideband-behaviors.yaml)
+
+| Property        | Type    | Description                                               |
+| --------------- | ------- | --------------------------------------------------------- |
+| `kscan`         | phandle | Phandle to a kscan containing keys to assign behaviors to |
+| `auto-enable`   | bool    | Enables the sideband instance on startup unconditionally  |
+| `wakeup-source` | bool    | Mark this kscan instance as able to wake the keyboard     |
+
+If `auto-enable` is not set, then the sideband behavior will wait for an external activation source before being enabled, e.g. being assigned as the chosen `zmk,kscan`. The `kscan` can contain additional keys, which will be used by the keymap if this node is set as the chosen `zmk,kscan` and has an appropriate matrix transformation defined.
+
+Each child node should have the following properties:
+
+| Property   | Type          | Description                                                                           | Default |
+| ---------- | ------------- | ------------------------------------------------------------------------------------- | ------- |
+| `row`      | int           | The row index of the key in the `kscan` to intercept and trigger a behavior for       | 0       |
+| `column`   | int           | The column index of the key in the `kscan` to intercept and trigger a behavior for    |         |
+| `bindings` | phandle-array | The behavior that should be triggered when the matching row and column event triggers |         |

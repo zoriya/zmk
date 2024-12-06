@@ -25,6 +25,7 @@ module.exports = {
             "troubleshooting/building-issues",
             "troubleshooting/flashing-issues",
             "troubleshooting/connection-issues",
+            "troubleshooting/hardware-issues",
           ],
         },
       ],
@@ -36,7 +37,7 @@ module.exports = {
         "features/split-keyboards",
         "features/debouncing",
         "features/battery",
-        "features/soft-off",
+        "features/low-power-states",
         "features/encoders",
         "features/displays",
         "features/backlight",
@@ -123,14 +124,19 @@ module.exports = {
         {
           type: "category",
           label: "Hardware Integration",
+          link: {
+            type: "doc",
+            id: "development/hardware-integration/index",
+          },
           collapsed: true,
           items: [
             "development/hardware-integration/new-shield",
             "development/hardware-integration/physical-layouts",
             "development/hardware-integration/hardware-metadata-files",
-            "development/hardware-integration/boards-shields-keymaps",
+            "development/hardware-integration/pinctrl",
             "development/hardware-integration/shift-registers",
             "development/hardware-integration/encoders",
+            "development/hardware-integration/soft-off-setup",
           ],
         },
         {
@@ -139,6 +145,7 @@ module.exports = {
           collapsed: true,
           items: [
             "development/contributing/clean-room",
+            "development/contributing/pull-requests",
             "development/contributing/documentation",
           ],
         },
@@ -156,7 +163,7 @@ module.exports = {
               },
               collapsed: true,
               items: [
-                "development/local-toolchain/setup/docker",
+                "development/local-toolchain/setup/container",
                 "development/local-toolchain/setup/native",
               ],
             },
